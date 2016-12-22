@@ -16,7 +16,7 @@ Some Features:
 
 * matplotlib
 * numpy
-* python 2.7 (only tested in that version - may or may not work in other versions)
+* python 3 (For Python2.7 version, please visitor the [original version](https://github.com/aleju/LossAccPlotter)
 
 # Example images
 
