@@ -220,7 +220,7 @@ class LossAccPlotter(object):
                 False and call redraw() at the end (significantly faster).
                 (Default is True.)
         """
-        assert isinstance(x_index, (int, long))
+        assert isinstance(x_index, (int, int))
 
         loss_train = ignore_nan_and_inf(loss_train, "loss train", x_index)
         loss_val = ignore_nan_and_inf(loss_val, "loss val", x_index)
