@@ -220,7 +220,7 @@ class LossAccPlotter(object):
                 False and call redraw() at the end (significantly faster).
                 (Default is True.)
         """
-        assert isinstance(x_index, (int, int))
+        assert isinstance(x_index, (int, ))
 
         loss_train = ignore_nan_and_inf(loss_train, "loss train", x_index)
         loss_val = ignore_nan_and_inf(loss_val, "loss val", x_index)
@@ -397,15 +397,15 @@ class LossAccPlotter(object):
         # Plot the lines
         alpha_main = self.alpha_thin if self.show_averages else self.alpha_thick
         if ax1:
-            h_lt, = ax1.plot(self.values_loss_train.keys(), self.values_loss_train.values(),
+            h_lt, = ax1.plot(list(self.values_loss_train.keys()), list(self.values_loss_train.values()),
                              ls_loss_train, label="loss train", alpha=alpha_main)
-            h_lv, = ax1.plot(self.values_loss_val.keys(), self.values_loss_val.values(),
+            h_lv, = ax1.plot(list(self.values_loss_val.keys()), list(self.values_loss_val.values()),
                              ls_loss_val, label="loss val.", alpha=alpha_main)
             handles.extend([h_lt, h_lv])
         if ax2:
-            h_at, = ax2.plot(self.values_acc_train.keys(), self.values_acc_train.values(),
+            h_at, = ax2.plot(list(self.values_acc_train.keys()), list(self.values_acc_train.values()),
                              ls_acc_train, label="acc. train", alpha=alpha_main)
-            h_av, = ax2.plot(self.values_acc_val.keys(), self.values_acc_val.values(),
+            h_av, = ax2.plot(list(self.values_acc_val.keys()), list(self.values_acc_val.values()),
                              ls_acc_val, label="acc. val.", alpha=alpha_main)
             handles.extend([h_at, h_av])
 
@@ -548,7 +548,7 @@ class LossAccPlotter(object):
                 poped_y = last_ys.pop(0)
                 running_sum -= poped_y
             result_y.append(float(running_sum) / float(len(last_ys)))
-        return (x_values, result_y)
+        return list(x_values), list(result_y)
 
     def _calc_regression(self, x_values, y_values):
         """Calculate the regression for one line (given as two lists, one
@@ -564,6 +564,9 @@ class LossAccPlotter(object):
         """
         if not x_values or len(x_values) < 2:
             return ([], [])
+
+        x_values = list(x_values)
+        y_values = list(y_values)
 
         # This currently assumes that the last added x-value for the line
         # was indeed that highest x-value.
